@@ -27,11 +27,22 @@ function shuffle(array) {
 }
 
 // This function adds as an event listener listening to whenever a user presses restart it shuffles the cards
-$('.restart').bind("click", function () {
+$('.restart').bind('click', function () {
     const shuffled = shuffle($('.card'))
     $('.deck').append(shuffled);;
 });
 
+
+const cards = $('.card');
+cards.on('click',function(e) {
+    e.target.classList.toggle('open');
+	e.target.classList.toggle('show');
+})
+// for (i=0; i<=cards.length; i++) {
+//     cards[i].on('click', function() {
+//     console.log(cards[i]);
+//     })
+// }
 
 /*
  * set up the event listener for a card. If a card is clicked:
