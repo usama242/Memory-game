@@ -12,7 +12,8 @@
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -24,6 +25,12 @@ function shuffle(array) {
 
     return array;
 }
+
+// This function adds as an event listener listening to whenever a user presses restart it shuffles the cards
+$('.restart').bind("click", function () {
+    const shuffled = shuffle($('.card'))
+    $('.deck').append(shuffled);;
+});
 
 
 /*
