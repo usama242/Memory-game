@@ -5,7 +5,7 @@ const timer = document.getElementById('timer');
 let seconds = 0;
 let minutes = 0;
 let time;
-let timerStart;
+let timerStart = true;
 
 //Move variables
 let moves = 0;
@@ -36,12 +36,29 @@ function shuffle(array) {
 function restart() {
 	moves = 0;
 	movesCounter.innerHTML = "0";
+
+    clearInterval(time);	
+	timer.innerHTML = "0 mins 0 sec";
+    timerStart = true;   
+	
 	cards.map(x => {
 	cards[x].classList.remove('show', 'open', 'disabled', 'match');
 	});
     const shuffled = shuffle(cards)
     $('.deck').append(shuffled);;
+ 
 };
+
+function timeCounter(){
+    time = setInterval(() => {
+        seconds++;       
+        if(seconds === 60){
+            minutes++;
+            seconds = 0;
+        } 
+        timer.innerHTML = `${minutes} mins ${seconds} sec`;
+    }, 1000);
+}
 
 //This function checks if the opened cards match
 function isMatch() {
@@ -76,6 +93,10 @@ cards.on('click',function(e) {
 		e.target.classList.toggle('show');
 		e.target.classList.toggle('disabled');
 	}
+	 if(timerStart) {
+		timeCounter();
+		timerStart = false;
+	} 
 	isMatch();
 });
 
