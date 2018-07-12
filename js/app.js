@@ -8,7 +8,7 @@ let timerStart;
 //The global variables
 const cards = $('.card');
 let matched = $('.match');
-let openCards = [];
+
 
 function shuffle(array) {
     var currentIndex = array.length,
@@ -27,40 +27,36 @@ function shuffle(array) {
 
 // This function adds as an event listener listening to whenever a user presses restart it shuffles the cards
 $('.restart').bind('click', function () {
-	for (let i = 0; i<cards.length; i++) {
-		cards[i].classList.remove('show', 'open');
-	};
+	cards.map(x => {
+	cards[x].classList.remove('show', 'open', 'disabled', 'match');
+	});
     const shuffled = shuffle(cards)
     $('.deck').append(shuffled);;
 });
 
 //This function checks if the opened cards match
 function isMatch() {
-	openCards.push(this);
+	let openCards = $('.open');
     if(openCards.length === 2){
-        if(openCards[0].type === openCards[1].type){
-            openCards[0].classList.add("match", "disabled");
-            openCards[1].classList.add("match", "disabled");
-            openCards[0].classList.remove("show", "open", "no-event");
-            openCards[1].classList.remove("show", "open", "no-event");
+        if(openCards[0].innerHTML === openCards[1].innerHTML){
+			openCards.map(x => {
+			openCards[x].classList.remove("open", "show")
+			openCards[x].classList.add("match", 'disabled');
+            });
         } else {
-            openCards[0].classList.add("unmatched");
-            openCards[1].classList.add("unmatched");
-
-        setTimeout(function(){
-            openCards[0].classList.remove("show", "open", "no-event","unmatched");
-            openCards[1].classList.remove("show", "open", "no-event","unmatched");
-            },1000);
+            setTimeout(() => openCards.map(x => {
+                openCards[x].classList.remove("open", "show", "disabled");      
+            }), 1000);
         }
-		openCards = [];
     }
 };
 		
-
-//This turns the cards uses event delegation
+	let openCards = $('.open');
+	
+//This turns the cards using event delegation to assign event listener
 cards.on('click',function(e) {
-    e.target.classList.toggle('open');
+	e.target.classList.toggle('open');
 	e.target.classList.toggle('show');
 	e.target.classList.toggle('disabled');
 	isMatch();
-})
+});
