@@ -7,12 +7,17 @@ let minutes = 0;
 let time;
 let timerStart;
 
+//Move variables
+let moves = 0;
+let movesCounter = document.querySelector(".moves");
+
 //The global variables
 const cards = $('.card');
 let matched = $('.match');
 
 //------------------------FUNCTIONS----------------------------
 
+//This function shuffles
 function shuffle(array) {
     var currentIndex = array.length,
         temporaryValue, randomIndex;
@@ -27,19 +32,23 @@ function shuffle(array) {
     return array;
 }
 
+//This function resets the game
 function restart() {
+	moves = 0;
+	movesCounter.innerHTML = "0";
 	cards.map(x => {
 	cards[x].classList.remove('show', 'open', 'disabled', 'match');
 	});
     const shuffled = shuffle(cards)
     $('.deck').append(shuffled);;
 };
-	
 
 //This function checks if the opened cards match
 function isMatch() {
 	let openCards = $('.open');
     if(openCards.length === 2){
+        moves++;
+        movesCounter.innerHTML = moves;		
         if(openCards[0].innerHTML === openCards[1].innerHTML){
 			openCards.map(x => {
 			openCards[x].classList.remove("open", "show")
@@ -52,8 +61,6 @@ function isMatch() {
         }
     }
 };
-		
-	let openCards = $('.open');
 
 
 //------------------------EVENT LISTENERS----------------------------
@@ -72,5 +79,6 @@ cards.on('click',function(e) {
 	isMatch();
 });
 
+$(document).ready(restart());
+
 //------------------------------MAIN---------------------------------
-restart();
