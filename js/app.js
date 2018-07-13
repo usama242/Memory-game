@@ -10,6 +10,8 @@ let timerStart = true;
 //Move variables
 let moves = 0;
 let movesCounter = document.querySelector(".moves");
+let star = 3;
+const stars = document.querySelectorAll(".fa-star");
 
 //The global variables
 const cards = $('.card');
@@ -35,6 +37,9 @@ function shuffle(array) {
 //This function resets the game
 function restart() {
 	moves = 0;
+	star = 3;
+	stars[2].style.display = "block";
+	stars[1].style.display = "block";
 	movesCounter.innerHTML = "0 Move";
 
     clearInterval(time);	
@@ -84,13 +89,21 @@ function isMatch() {
 	if (matched.length === 16) {
 		modal()
 	}
+	if(moves === 15){
+	star = 2;
+	stars[2].style.display = "none";
+	}else if(moves === 25){
+	star = 1;
+	stars[1].style.display = "none";
+    }
 };
 
 function modal(){
         clearInterval(time); 
-        swal({
+        //Sweet alert external api
+		swal({
             title: "Congratulations !!!",
-            text: sessionStorage.getItem("moves") === null ? `You won with time: ${minutes} min ${seconds} sec (${moves} moves)` : `Your time: ${minutes} min ${seconds} sec (${moves} moves)! \n Last time you had ${sessionStorage.getItem("moves")} moves`,
+			text: `You won with time: ${minutes} min ${seconds} sec \nwith a rating of ${star} stars (${moves} moves)`,
             type: "success",
             confirmButtonText: "Play again!"
         }).then(function(isConfirm) {
@@ -98,7 +111,6 @@ function modal(){
                restart();
             }     
         })
-		sessionStorage.setItem("moves", moves);
 }
 //------------------------EVENT LISTENERS----------------------------
 	
