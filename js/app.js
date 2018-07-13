@@ -1,7 +1,7 @@
 //------------------------VARIABLES----------------------------
 
 //Time variables
-const timer = document.getElementById('timer');
+let timer = document.getElementById('timer');
 let seconds = 0;
 let minutes = 0;
 let time;
