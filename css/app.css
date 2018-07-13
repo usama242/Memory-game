@@ -146,9 +146,13 @@ h1 {
  */
 
 .score-panel {
-    text-align: left;
-    width: 345px;
+	align-items: center;
+    width: 50%;
+	display:flex;
+	flex-wrap:wrap;
+	justify-content: space-between;
     margin-bottom: 10px;
+
 }
 
 .score-panel .stars {
@@ -161,9 +165,4 @@ h1 {
 .score-panel .stars li {
     list-style: none;
     display: inline-block;
-}
-
-.score-panel .restart {
-    float: right;
-    cursor: pointer;
 }

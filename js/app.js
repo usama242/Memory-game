@@ -13,7 +13,7 @@ let movesCounter = document.querySelector(".moves");
 
 //The global variables
 const cards = $('.card');
-let matched = $('.match');
+let matched = document.getElementsByClassName("match");
 
 //------------------------FUNCTIONS----------------------------
 
@@ -35,18 +35,17 @@ function shuffle(array) {
 //This function resets the game
 function restart() {
 	moves = 0;
-	movesCounter.innerHTML = "0";
+	movesCounter.innerHTML = "0 Move";
 
     clearInterval(time);	
-	timer.innerHTML = "0 mins 0 sec";
+	timer.innerHTML = "Time: 0 mins 0 sec";
     timerStart = true;   
 	
 	cards.map(x => {
 	cards[x].classList.remove('show', 'open', 'disabled', 'match');
 	});
     const shuffled = shuffle(cards)
-    $('.deck').append(shuffled);;
- 
+    $('.deck').append(shuffled);; 
 };
 
 function timeCounter(){
@@ -56,7 +55,7 @@ function timeCounter(){
             minutes++;
             seconds = 0;
         } 
-        timer.innerHTML = `${minutes} mins ${seconds} sec`;
+        timer.innerHTML = `Time: ${minutes} mins ${seconds} sec`;
     }, 1000);
 }
 
@@ -65,7 +64,12 @@ function isMatch() {
 	let openCards = $('.open');
     if(openCards.length === 2){
         moves++;
-        movesCounter.innerHTML = moves;		
+		if(moves === 1){
+		movesCounter.innerHTML = moves+' Move';	
+		}
+		else{
+        movesCounter.innerHTML = moves+' Moves';
+		}		
         if(openCards[0].innerHTML === openCards[1].innerHTML){
 			openCards.map(x => {
 			openCards[x].classList.remove("open", "show")
@@ -77,9 +81,25 @@ function isMatch() {
             }), 1000);
         }
     }
+	if (matched.length === 16) {
+		modal()
+	}
 };
 
-
+function modal(){
+        clearInterval(time); 
+        swal({
+            title: "Congratulations !!!",
+            text: sessionStorage.getItem("moves") === null ? `You won with time: ${minutes} min ${seconds} sec (${moves} moves)` : `Your time: ${minutes} min ${seconds} sec (${moves} moves)! \n Last time you had ${sessionStorage.getItem("moves")} moves`,
+            type: "success",
+            confirmButtonText: "Play again!"
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+               restart();
+            }     
+        })
+		sessionStorage.setItem("moves", moves);
+}
 //------------------------EVENT LISTENERS----------------------------
 	
 // This function adds as an event listener listening to whenever a user presses restart it shuffles the cards
@@ -100,6 +120,7 @@ cards.on('click',function(e) {
 	isMatch();
 });
 
+//------------------------------MAIN---------------------------------
+
 $(document).ready(restart());
 
-//------------------------------MAIN---------------------------------
