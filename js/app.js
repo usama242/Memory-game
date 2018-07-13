@@ -1,7 +1,7 @@
 //------------------------VARIABLES----------------------------
 
 //Time variables
-let timer = document.getElementById('timer');
+let timer = document.getElementById("timer");
 let seconds = 0;
 let minutes = 0;
 let time;
@@ -14,7 +14,7 @@ let star = 3;
 const stars = document.querySelectorAll(".fa-star");
 
 //The global variables
-const cards = $('.card');
+const cards = $(".card");
 let matched = document.getElementsByClassName("match");
 
 //------------------------FUNCTIONS----------------------------
@@ -47,10 +47,10 @@ function restart() {
     timerStart = true;
 
     cards.map(x => {
-        cards[x].classList.remove('show', 'open', 'disabled', 'match');
+        cards[x].classList.remove("show", "open", "disabled", "match");
     });
     const shuffled = shuffle(cards)
-    $('.deck').append(shuffled);;
+    $(".deck").append(shuffled);;
 };
 
 function timeCounter() {
@@ -66,13 +66,13 @@ function timeCounter() {
 
 //This function checks if the opened cards match
 function isMatch() {
-    let openCards = $('.open');
+    let openCards = $(".open");
     if (openCards.length === 2) {
         moves++;
         if (moves === 1) {
-            movesCounter.innerHTML = moves + ' Move';
+            movesCounter.innerHTML = moves + " Move";
         } else {
-            movesCounter.innerHTML = moves + ' Moves';
+            movesCounter.innerHTML = moves + " Moves";
         }
         if (openCards[0].innerHTML === openCards[1].innerHTML) {
             openCards.map(x => {
@@ -114,15 +114,15 @@ function modal() {
 //------------------------EVENT LISTENERS----------------------------
 
 // This function adds as an event listener listening to whenever a user presses restart it shuffles the cards
-$('.restart').bind('click', restart)
+$(".restart").bind("click", restart)
 
 //This turns the cards using event delegation to assign event listener
-cards.on('click', function (e) {
-    let openCards = $('.open');
+cards.on("click", function (e) {
+    let openCards = $(".open");
     if (openCards.length < 2) {
-        e.target.classList.toggle('open');
-        e.target.classList.toggle('show');
-        e.target.classList.toggle('disabled');
+        e.target.classList.toggle("open");
+        e.target.classList.toggle("show");
+        e.target.classList.toggle("disabled");
     }
     if (timerStart) {
         timeCounter();
