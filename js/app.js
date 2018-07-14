@@ -41,6 +41,8 @@ function restart() {
     stars[2].style.display = "block";
     stars[1].style.display = "block";
     movesCounter.innerHTML = "0 Move";
+	seconds = 0;
+	minutes = 0;
 
     clearInterval(time);
     timer.innerHTML = "Time: 0 mins 0 sec";
